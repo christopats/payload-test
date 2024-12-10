@@ -1,0 +1,8 @@
+steps:
+  - name: 'bash'
+    id: hello
+    args: ['echo', 'Hello World']
+
+options:
+  dynamicSubstitutions: true
+  logging: CLOUD_LOGGING_ONLY
