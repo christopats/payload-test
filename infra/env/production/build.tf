@@ -51,7 +51,7 @@ resource "google_cloudbuild_trigger" "deploy" {
     repository = google_cloudbuildv2_repository.platform.id
 
     push {
-      branch = "master"
+      branch = "main"
     }
   }
 
