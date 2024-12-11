@@ -31,17 +31,17 @@ variable "domain_name" {
 }
 
 variable "build_region" {
-    type = string
-    default = "europe-west1"
+  type    = string
+  default = "europe-west1"
 }
 
 variable "github_repository_name" {
-    type = string
-    default = "payload-test"
+  type    = string
+  default = "payload-test"
 }
 
 
 variable "github_app_installation_id" {
-    type = number
-    default = "58222058" 
+  type    = number
+  default = "58222058"
 }

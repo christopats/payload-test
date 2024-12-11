@@ -12,11 +12,11 @@ resource "google_secret_manager_secret_version" "github_token_secret_version" {
   secret      = google_secret_manager_secret.github_token_secret.id
   secret_data = file("${path.module}/secrets/github_token.txt")
 
-#   lifecycle {
-#     ignore_changes = [
-#       secret_data
-#     ]
-#   }
+  #   lifecycle {
+  #     ignore_changes = [
+  #       secret_data
+  #     ]
+  #   }
 }
 
 resource "google_secret_manager_secret" "env_frontend" {

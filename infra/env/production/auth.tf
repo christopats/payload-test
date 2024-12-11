@@ -2,14 +2,14 @@ resource "google_identity_platform_config" "auth" {
   provider = google-beta
   project  = google_project.platform.project_id
 
-#   sign_in {
-#     allow_duplicate_emails = false
-# 
-#     email {
-#       enabled           = true
-#       password_required = true
-#     }
-#   }
+  #   sign_in {
+  #     allow_duplicate_emails = false
+  # 
+  #     email {
+  #       enabled           = true
+  #       password_required = true
+  #     }
+  #   }
 
   authorized_domains = [
     var.domain_name,
