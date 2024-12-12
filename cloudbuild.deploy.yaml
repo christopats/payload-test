@@ -1,7 +1,45 @@
 steps:
-  - name: 'bash'
-    id: hello
-    args: ['echo', 'Hello World']
+  - id: install
+    name: 'europe-west2-docker.pkg.dev/payload-test-444215/platform/build'
+    entrypoint: pnpm
+    args: ['install', '--ignore-scripts']
+
+  - id: build-app
+    name: 'europe-west2-docker.pkg.dev/payload-test-444215/platform/build'
+    entrypoint: pnpm
+    args: ['build']
+
+  - id: build-container
+    name: 'gcr.io/cloud-builders/docker'
+    script: |
+      docker build -t europe-west2-docker.pkg.dev/$PROJECT_ID/platform/frontend:$SHORT_SHA .
+    automapSubstitutions: true
+
+  - id: push-container
+    name: 'gcr.io/cloud-builders/docker'
+    script: |
+      docker push europe-west2-docker.pkg.dev/$PROJECT_ID/platform/frontend:$SHORT_SHA
+    automapSubstitutions: true
+
+  - id: deploy-container
+    name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      [
+        'run',
+        'deploy',
+        'frontend',
+        '--image',
+        'europe-west2-docker.pkg.dev/$PROJECT_ID/platform/frontend:$SHORT_SHA',
+        '--region',
+        'europe-west2',
+      ]
+    automapSubstitutions: true
+
+  - id: deploy-static
+    name: 'europe-west2-docker.pkg.dev/payload-test-444215/platform/build'
+    entrypoint: 'firebase'
+    args: ['deploy', '--only', 'hosting']
 
 options:
   dynamicSubstitutions: true

@@ -9,7 +9,9 @@ resource "google_project_service" "platform" {
     "compute.googleapis.com",
     "iam.googleapis.com",
     "cloudbuild.googleapis.com",
-    "run.googleapis.com"
+    "run.googleapis.com",
+    "sqladmin.googleapis.com",
+    "sql-component.googleapis.com"
 
   ])
   service = each.key

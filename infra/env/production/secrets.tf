@@ -40,3 +40,20 @@ resource "google_secret_manager_secret_version" "env_frontend" {
   }
 }
 
+
+resource "google_secret_manager_secret" "postgres_system_password_secret" {
+  secret_id = "postgres-system-password"
+
+  replication {
+    auto {}
+  }
+
+  depends_on = [google_sql_user.system]
+}
+
+resource "google_secret_manager_secret_version" "postgres_system_password_secret_version" {
+  secret      = google_secret_manager_secret.postgres_system_password_secret.id
+  secret_data = google_sql_user.system.password
+}
+
+

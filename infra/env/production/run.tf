@@ -18,6 +18,10 @@ resource "google_cloud_run_v2_service" "frontend" {
         name       = "secrets"
         mount_path = "/secrets"
       }
+      volume_mounts {
+        mount_path = "/cloudsql"
+        name       = "cloudsql"
+      }
     }
 
     volumes {
@@ -29,6 +33,14 @@ resource "google_cloud_run_v2_service" "frontend" {
           path    = "env"
           mode    = 0 # use default 0444
         }
+      }
+    }
+
+    volumes {
+      name = "cloudsql"
+
+      cloud_sql_instance {
+        instances = [google_sql_database_instance.project.connection_name]
       }
     }
   }
