@@ -1,24 +1,29 @@
-FROM node:18.8-alpine as base
+# This template uses Automatically Copying Traced Files feature
+# so you need to setup your Next Config file to use `output: 'standalone'`
+# Please read this for more information https://nextjs.org/docs/pages/api-reference/next-config-js/output
 
-FROM base as builder
-
-WORKDIR /home/node/app
-COPY package*.json ./
-
-COPY . .
-RUN yarn install
-RUN yarn build
-
-FROM base as runtime
-
+# Production image, copy all the files and run next
+FROM docker.io/node:22-alpine AS runner
+RUN apk add --no-cache dumb-init
+ENV SECRET_ENV=/secrets/env
 ENV NODE_ENV=production
-
-WORKDIR /home/node/app
-COPY package*.json  ./
-COPY yarn.lock ./
-
-RUN yarn install --production
-
-EXPOSE 3000
-
-CMD ["node", "dist/server.js"]
+ENV PORT=8080
+WORKDIR /usr/src/app
+COPY payload-test.db ./
+COPY next.config.js ./
+COPY public ./public
+COPY .next/standalone ./
+COPY .next/standalone/package.json ./
+COPY .next/standalone/node_modules ./node_modules
+COPY .next/static ./.next/static
+# RUN npm i sharp
+RUN chown -R node:node .
+USER node
+EXPOSE 8080
+# COPY --chown=node:node ./tools/scripts/entrypoints/api.sh /usr/local/bin/docker-entrypoint.sh
+# ENTRYPOINT [ "docker-entrypoint.sh" ]
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line in case you want to disable telemetry.
+ENV NEXT_TELEMETRY_DISABLED=1
+CMD ["sh", "-c", "dumb-init node --env-file=${SECRET_ENV} server.js"]

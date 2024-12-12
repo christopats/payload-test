@@ -6,6 +6,7 @@ node_modules
 .next
 .vercel
 .terraform
+.postgres
 
 # Payload default media upload directory
 public/media/
