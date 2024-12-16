@@ -11,6 +11,7 @@ ENV SECRET_ENV=/secrets/env
 ENV PORT=8080
 ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /usr/src/app
+RUN npm install --ignore-scripts=false --foreground-scripts --verbose sharp
 COPY payload-test.db ./
 COPY next.config.js ./
 COPY public ./public
