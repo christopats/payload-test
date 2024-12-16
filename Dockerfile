@@ -5,9 +5,10 @@
 # Production image, copy all the files and run next
 FROM docker.io/node:22-alpine AS runner
 RUN apk add --no-cache dumb-init
-ENV SECRET_ENV=/secrets/env
+COPY infra/env/production/secrets/env_frontend.txt /usr/src/app/.env
 ENV NODE_ENV=production
 ENV PORT=8080
+ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /usr/src/app
 COPY payload-test.db ./
 COPY next.config.js ./
@@ -25,5 +26,4 @@ EXPOSE 8080
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry.
-ENV NEXT_TELEMETRY_DISABLED=1
-CMD ["sh", "-c", "dumb-init node --env-file=${SECRET_ENV} server.js"]
+CMD ["sh", "-c", "dumb-init", "node", "server.js"]
