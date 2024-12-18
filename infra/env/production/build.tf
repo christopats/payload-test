@@ -26,7 +26,7 @@ resource "google_project_iam_member" "cloudbuild_roles" {
     "roles/artifactregistry.reader",
     "roles/artifactregistry.writer",
     #     "roles/cloudbuild.workerPoolUser",
-    #     "roles/cloudsql.client",
+    "roles/cloudsql.client",
     "roles/firebase.admin",
     "roles/iam.serviceAccountUser",
     "roles/logging.logWriter",
