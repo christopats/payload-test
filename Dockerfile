@@ -4,7 +4,8 @@
 
 # Production image, copy all the files and run next
 FROM docker.io/node:slim AS runner
-RUN apk add --no-cache dumb-init
+RUN apt update
+RUN apt install dumb-init
 
 ENV NODE_ENV=production
 ENV SECRET_ENV=/secrets/env
