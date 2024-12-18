@@ -1,6 +1,6 @@
 steps:
   - id: install
-    name: 'europe-west2-docker.pkg.dev/abramandala/platform/build'
+    name: 'europe-west2-docker.pkg.dev/payload-test-444215/platform/build'
     entrypoint: bash
     args:
       - -c
