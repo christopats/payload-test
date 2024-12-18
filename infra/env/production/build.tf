@@ -59,3 +59,22 @@ resource "google_cloudbuild_trigger" "deploy" {
     google_project_iam_member.cloudbuild_roles
   ]
 }
+
+resource "google_cloudbuild_trigger" "base" {
+  name            = "base"
+  location        = var.build_region
+  service_account = google_service_account.cloudbuild_service_account.id
+  filename        = "cloudbuild.base.yaml"
+
+  repository_event_config {
+    repository = google_cloudbuildv2_repository.platform.id
+
+    push {
+      tag = "^build-\\d+.\\d+.\\d+-\\d+.\\d+$"
+    }
+  }
+
+  depends_on = [
+    google_project_iam_member.cloudbuild_roles
+  ]
+}

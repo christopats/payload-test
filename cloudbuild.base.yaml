@@ -1,0 +1,12 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    script: |
+      cd infra/ci && docker build -t europe-west2-docker.pkg.dev/payload-test-444215/project/build -t europe-west2-docker.pkg.dev/payload-test-444215/project/build:22.12.0 .
+
+images:
+  - 'europe-west2-docker.pkg.dev/payload-test-444215/project/build'
+  - 'europe-west2-docker.pkg.dev/payload-test-444215/project/build:22.12.0'
+
+options:
+  dynamicSubstitutions: true
+  logging: CLOUD_LOGGING_ONLY
