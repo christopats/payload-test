@@ -20,8 +20,12 @@ steps:
 
   - id: build-app
     name: 'europe-west2-docker.pkg.dev/payload-test-444215/platform/build'
-    entrypoint: pnpm
-    args: ['build']
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        /cloudsql/cloud-sql-proxy --unix-socket /cloudsql ${_INSTANCE_CONNECTION_NAME} & sleep 2;
+        pnpm build
 
   - id: build-container
     name: 'gcr.io/cloud-builders/docker'
