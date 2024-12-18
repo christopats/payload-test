@@ -4,16 +4,16 @@ steps:
     entrypoint: pnpm
     args: ['install', '--ignore-scripts']
 
-  - id: build-app
-    name: 'europe-west2-docker.pkg.dev/payload-test-444215/platform/build'
-    entrypoint: pnpm
-    args: ['build']
-
-# postinstall added ??
+  # postinstall added ??
   - id: post-install sharp
     name: 'europe-west2-docker.pkg.dev/payload-test-444215/platform/build'
     entrypoint: pnpm
     args: ['postinstall']
+
+  - id: build-app
+    name: 'europe-west2-docker.pkg.dev/payload-test-444215/platform/build'
+    entrypoint: pnpm
+    args: ['build']
 
   - id: build-container
     name: 'gcr.io/cloud-builders/docker'
