@@ -1,14 +1,13 @@
 steps:
   - id: install
-    name: 'europe-west2-docker.pkg.dev/payload-test-444215/platform/build'
-    entrypoint: pnpm
-    args: ['install', '--ignore-scripts']
-
-  # postinstall added ??
-  - id: post-install sharp
-    name: 'europe-west2-docker.pkg.dev/payload-test-444215/platform/build'
-    entrypoint: pnpm
-    args: ['postinstall']
+    name: 'europe-west2-docker.pkg.dev/abramandala/platform/build'
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        echo "$$ENV_FRONTEND" > .env;
+        pnpm install;
+    secretEnv: ['ENV_FRONTEND']
 
   - id: build-app
     name: 'europe-west2-docker.pkg.dev/payload-test-444215/platform/build'
@@ -46,6 +45,11 @@ steps:
     name: 'europe-west2-docker.pkg.dev/payload-test-444215/platform/build'
     entrypoint: 'firebase'
     args: ['deploy', '--only', 'hosting']
+
+availableSecrets:
+  secretManager:
+    - versionName: projects/payload-test-44215/secrets/env-frontend/versions/latest
+      env: 'ENV_FRONTEND'
 
 options:
   dynamicSubstitutions: true
