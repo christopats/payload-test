@@ -3,7 +3,7 @@
 # Please read this for more information https://nextjs.org/docs/pages/api-reference/next-config-js/output
 
 # Production image, copy all the files and run next
-FROM docker.io/node:22-alpine AS runner
+FROM docker.io/node:slim AS runner
 RUN apk add --no-cache dumb-init
 
 ENV NODE_ENV=production
