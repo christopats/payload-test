@@ -48,7 +48,7 @@ steps:
 
 availableSecrets:
   secretManager:
-    - versionName: projects/payload-test-44215/secrets/env-frontend/versions/latest
+    - versionName: projects/payload-test-444215/secrets/env-frontend/versions/latest
       env: 'ENV_FRONTEND'
 
 options:
